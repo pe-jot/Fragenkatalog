@@ -11,6 +11,7 @@ Die Datensätze der Fragenkataloge sind jedoch durch einfaches Auswechseln der e
 Es wurde speziell darauf geachtet, dass die verwendeten Technologien **ohne** eigenem Webserver funktionieren. Daher können die Dateien entweder lokal auf einem PC heruntergeladen werden und direkt in einem modernen Webbrowser geöffnet werden, oder aber über folgenden Link direkt hier aufgerufen werden:
 
 https://rawcdn.githack.com/pe-jot/Fragenkatalog/8b79799eb77287d861e9fabeedf018a8e4fffba9/index.html
+<!-- https://raw.githack.com/pe-jot/Fragenkatalog/main/index.html -->
 
 ## Flugfunk
 
@@ -23,6 +24,8 @@ Die offiziellen Fragenkataloge sind auf der Website der Fernmeldebehörde https:
 > 
 > Der Autor übernimmt keine Haftung auf Vollständigkeit und Richtigkeit der hier zur Verfügung gestellten Fragenkataloge!
 
+
+---
 
 
 ## English description
