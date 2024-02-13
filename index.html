@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		 <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<title>Fragenkatalog Trainer</title>
+	</head>
+	<body>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+		<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
+		
+		<div class="container">
+			<div class="row py-4">
+				<div class="col">
+					<h1 class="display-4 text-center" id="caption">Title</h1>
+				</div>
+			</div>
+			
+			<form id="quizStart" style="display: none">
+				<div class="row justify-content-center align-items-center py-5">
+					<div class="col-auto">
+						Anzahl Fragen:
+					</div>
+					<div class="col-auto">
+						<input type="number" class="form-control form-control-lg" min="0" max="0" step="1" id="questionCount">
+					</div>
+					<div class="col-auto">
+						<button type="button" class="btn btn-outline-primary px-5" id="start">Start</button>
+					</div>
+				</div>
+			</form>
+			
+			<div class="container" id="quiz" style="display: none">
+				<div class="row pb-4 align-items-center">
+					<div class="col-auto">
+						<small>Fortschritt:</small>
+					</div>
+					<div class="col">
+						<div class="progress" role="progressbar" aria-label="Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+							<div class="progress-bar overflow-visible" style="width: 0%">0 / 0 (0 %)</div>
+						</div>
+					</div>
+					<div class="col-auto">
+						<button class="btn btn-outline-secondary btn-sm px-4" type="button" id="nextQuestion">nächste</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<h4 id="questionId"></h4>
+						<h5 id="question" class="pb-3">Question</h5>
+						<p id="image" style="display: none"><img src="" class="img-fluid" alt="Explanatory image"/></p>
+						<div id="answers" class="d-grid gap-2">
+							<!-- <button class="btn btn-outline-primary" type="button" data-correct="true">Template</button> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="container" id="quizResults" style="display: none">
+				<div class="row">
+					<div class="col">
+						<h3 class="text-center">Ergebnis:</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<p class="lead text-center" id="result">0 von 0 richtig (0 %)</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-8 offset-2">
+						<div class="progress-stacked">
+							<!-- Correct -->
+							<div class="progress" role="progressbar" aria-label="Result" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+								<div class="progress-bar bg-success"></div>
+							</div>
+							<!-- Wrong -->
+							<div class="progress" role="progressbar" aria-label="Result" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+								<div class="progress-bar bg-danger"></div>
+							</div>
+							<!-- Skipped -->
+							<div class="progress" role="progressbar" aria-label="Result" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+								<div class="progress-bar bg-secondary"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row py-4">
+					<div class="col text-center">
+						<button class="btn btn-outline-primary" type="button" id="restartWrong" style="display: none">Falsche / übersprungene Antworten nochmals versuchen</button>
+						<button class="btn btn-outline-primary" type="button" id="restart" style="display: none">Neustart</button>
+					</div>
+				</div>
+			</div>
+			
+		</div><!-- Main container -->
+		
+		<script type="text/javascript" src="flugfunk.js"></script>
+		<script type="text/javascript" src="logic.js"></script>
+	</body>
+</html>
