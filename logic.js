@@ -1,3 +1,4 @@
+let filteredQuestionnaire;
 let selectedQuestions;
 let wrongQuestions;
 let questionCount;
@@ -9,7 +10,7 @@ let questionAnswered;
 $(document).ready(function() {
 	$("#caption").text(title);
 	$("#start").on("click", start);
-	$("#restart").on("click", function() { location.reload(); });
+	$("#restart").on("click", initStart);
 	$("#restartWrong").on("click", { restart: true }, start);
 	
 	initStart();
@@ -20,9 +21,13 @@ function initStart() {
 	$("#quizResults").hide();
 	$("#restart").hide();
 	
+	// Temporarily add all items to the catalogue
+	filteredQuestionnaire = new Array();
+	questionnaire.forEach(x => filteredQuestionnaire.push(x));
+	
 	$("#quizStart").show();
-	$("#questionCount").attr("max", questionnaire.length);
-	$("#questionCount").val(questionnaire.length);
+	$("#questionCount").attr("max", filteredQuestionnaire.length);
+	$("#questionCount").val(filteredQuestionnaire.length);
 }
 
 function start(event) {	
@@ -51,9 +56,9 @@ function start(event) {
 	else {
 		for (let i = 0; i < questionCount; i++) {
 			// Generate next question index, then add it to list of selected questions and remove it from the available questions
-			let next = Math.floor(Math.random() * questionnaire.length);
-			selectedQuestions.push(questionnaire[next]);
-			questionnaire.splice(next, 1);
+			let next = Math.floor(Math.random() * filteredQuestionnaire.length);
+			selectedQuestions.push(filteredQuestionnaire[next]);
+			filteredQuestionnaire.splice(next, 1);
 		}
 	}
 	
