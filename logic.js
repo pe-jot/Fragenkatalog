@@ -12,6 +12,7 @@ $(document).ready(function() {
 	$("#start").on("click", start);
 	$("#restart").on("click", initStart);
 	$("#restartWrong").on("click", { restart: true }, start);
+	$("#abort").on("click", showResult);
 	
 	initStart();
 });
@@ -140,7 +141,6 @@ function nextQuestion() {
 	currentQuestion = currentQuestion + 1;
 	updateProgress();
 	if (currentQuestion === questionCount) {
-		$("#nextQuestion").off("click");
 		showResult();
 	}
 	else {
@@ -149,6 +149,7 @@ function nextQuestion() {
 }
 
 function showResult() {
+	$("#nextQuestion").off("click");
 	$("#quiz").hide();
 	
 	let correctPercentage = Math.round(100 * correctAnswers / questionCount);
