@@ -14,21 +14,90 @@ $(document).ready(function() {
 	$("#restartWrong").on("click", { restart: true }, start);
 	$("#abort").on("click", showResult);
 	
+	loadFilters();
+	applyFilter();
 	initStart();
 });
+
+function loadFilters() {
+	let categories = new Set(questionnaire.map(a => a.category));
+	categories.forEach(c => addFilter("category", c));
+	
+	let filters = new Set(questionnaire.map(a => a.filter));
+	filters.forEach(f => addFilter("filter", f));
+	
+	if (categories.size > 0 || filters.size > 0) {
+		$("#filter").show();
+	}
+}
+
+function addFilter(type, value) {
+	if (value == null || value == undefined) {
+		return;
+	}
+	$("#filter > div").append(
+		$("<div>", { "class" : "form-check" })
+			.append(
+				$("<input>", { 
+					"class" : "form-check-input form-check-input-lg",
+					"type" : "checkbox",
+					"data-type" : type,
+					"value" : value,
+					"checked" : true
+				})
+				.on("change", applyFilter)
+			)
+			.append(
+				$("<label>", { "class" : "form-check-label" })
+					.text(value)
+			)
+	);
+}
+
+function applyFilter() {
+	let selectedCategories = new Array();
+	$("#filter input:checkbox:checked[data-type='category']").each(function() {
+		selectedCategories.push($(this).val())
+	});
+	
+	let prefilteredQuestionnaire = new Array();
+	
+	// Add all items that don't have a category property set
+	prefilteredQuestionnaire.filter(a => a.category === undefined).forEach(
+		x => prefilteredQuestionnaire.push(x)
+	);
+	// Add all items according to category
+	selectedCategories.forEach(
+		category => questionnaire.filter(a => a.category === category).forEach(
+			x => prefilteredQuestionnaire.push(x)
+	));
+	
+	let selectedFilters = new Array();
+	$("#filter input:checkbox:checked[data-type='filter']").each(function() {
+		selectedFilters.push($(this).val());
+	});
+	
+	filteredQuestionnaire = new Array();
+	
+	// Add all items that don't have a filter property set
+	prefilteredQuestionnaire.filter(a => a.filter === undefined).forEach(
+		x => filteredQuestionnaire.push(x)
+	);
+	// Add all items according to filter
+	selectedFilters.forEach(
+		filter => prefilteredQuestionnaire.filter(a => a.filter === filter).forEach(
+			x => filteredQuestionnaire.push(x)
+	));
+	
+	$("#questionCount").attr("max", filteredQuestionnaire.length);
+	$("#questionCount").val(filteredQuestionnaire.length);
+}
 
 function initStart() {
 	$("#quiz").hide();
 	$("#quizResults").hide();
-	$("#restart").hide();
-	
-	// Temporarily add all items to the catalogue
-	filteredQuestionnaire = new Array();
-	questionnaire.forEach(x => filteredQuestionnaire.push(x));
-	
+	$("#restart").hide();	
 	$("#quizStart").show();
-	$("#questionCount").attr("max", filteredQuestionnaire.length);
-	$("#questionCount").val(filteredQuestionnaire.length);
 }
 
 function start(event) {	
