@@ -10,18 +10,9 @@ Die Datensätze der Fragenkataloge sind jedoch durch einfaches Auswechseln der e
 
 Es wurde speziell darauf geachtet, dass die verwendeten Technologien **ohne** eigenem Webserver funktionieren. Daher können die Dateien entweder lokal auf einem PC heruntergeladen werden und direkt in einem modernen Webbrowser geöffnet werden, oder aber über folgenden Link direkt hier aufgerufen werden:
 
-https://rawcdn.githack.com/pe-jot/Fragenkatalog/56a272c21b198ce0b7ec0909cefd5fd634318f91/index.html
-<!-- https://raw.githack.com/pe-jot/Fragenkatalog/main/index.html -->
-
-## Flugfunk
-
-Die offiziellen Fragenkataloge sind auf der Website der Fernmeldebehörde https://www.fb.gv.at zu finden.
+https://raw.githack.com/pe-jot/Fragenkatalog/PPL/index.html
 
 > ### Hinweis:
-> Die Antwortmöglichkeiten entstammen dem letzten verfügbaren Stand der Kursunterlagen, was jedoch nicht mehr dem aktuellen Stand der Gesetzgebung entspricht!
->
-> Es wurde darauf geachtet, dass die richtigen Antworten möglichst mit jenen der Behörde übereinstimmen.
-> 
 > Der Autor übernimmt keine Haftung auf Vollständigkeit und Richtigkeit der hier zur Verfügung gestellten Fragenkataloge!
 
 
