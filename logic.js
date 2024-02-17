@@ -11,13 +11,12 @@ let startTime;
 $(document).ready(function() {
 	$("#caption").text(title);
 	$("#start").on("click", start);
-	$("#restart").on("click", initStart);
+	$("#restart").on("click", initialize);
 	$("#restartWrong").on("click", { restart: true }, start);
 	$("#abort").on("click", showResult);
 	
 	loadFilters();
-	applyFilter();
-	initStart();
+	initialize();
 });
 
 function loadFilters() {
@@ -94,10 +93,13 @@ function applyFilter() {
 	$("#questionCount").val(filteredQuestionnaire.length);
 }
 
-function initStart() {
+function initialize() {
 	$("#quiz").hide();
 	$("#quizResults").hide();
 	$("#restart").hide();	
+	
+	applyFilter();
+	
 	$("#quizStart").show();
 }
 
