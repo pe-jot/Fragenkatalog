@@ -6,6 +6,7 @@ let currentQuestion;
 let correctAnswers;
 let wrongAnswers;
 let questionAnswered;
+let startTime;
 
 $(document).ready(function() {
 	$("#caption").text(title);
@@ -138,6 +139,8 @@ function start(event) {
 	displayQuestion();
 	$("#quiz").show();
 	$("#nextQuestion").on("click", nextQuestion);
+	
+	startTime = new Date();
 }
 
 function updateProgress() {
@@ -218,6 +221,8 @@ function nextQuestion() {
 }
 
 function showResult() {
+	let end = new Date();
+	
 	$("#nextQuestion").off("click");
 	$("#quiz").hide();
 	
@@ -247,6 +252,9 @@ function showResult() {
 		.width(skippedPercentage + "%")
 		.children("div.progress-bar")
 			.text(skippedAnswers + " (" + skippedPercentage + " %)");
+	
+	let dT = new Date(end - startTime + end.getTimezoneOffset() * 60 * 1000);
+	$("#duration").text(dT.toLocaleTimeString());
 	
 	let qRestartButton = (wrongQuestions.length > 0) ? $("#restartWrong") : $("#restart");
 	qRestartButton.show();
