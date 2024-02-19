@@ -258,8 +258,10 @@ function showResult() {
 	let dT = new Date(end - startTime + end.getTimezoneOffset() * 60 * 1000);
 	$("#duration").text(dT.toLocaleTimeString());
 	
-	let qRestartButton = (wrongQuestions.length > 0) ? $("#restartWrong") : $("#restart");
-	qRestartButton.show();
+	if (wrongQuestions.length > 0) {
+		$("#restartWrong").show();
+	}
+	$("#restart").show();
 	
 	$("#quizResults").show();
 }
