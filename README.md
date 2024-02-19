@@ -10,7 +10,7 @@ Die Datensätze der Fragenkataloge sind jedoch durch einfaches Auswechseln der e
 
 Es wurde speziell darauf geachtet, dass die verwendeten Technologien **ohne** eigenem Webserver funktionieren. Daher können die Dateien entweder lokal auf einem PC heruntergeladen werden und direkt in einem modernen Webbrowser geöffnet werden, oder aber über folgenden Link direkt hier aufgerufen werden:
 
-https://rawcdn.githack.com/pe-jot/Fragenkatalog/468841bb4e5346a51ab6be3fb68a68359df0e5ab/index.html
+https://rawcdn.githack.com/pe-jot/Fragenkatalog/8888be523366102b524f61e8507da30aaf6e0089/index.html
 <!-- https://raw.githack.com/pe-jot/Fragenkatalog/main/index.html -->
 
 ## Flugfunk
