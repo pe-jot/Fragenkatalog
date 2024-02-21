@@ -10,7 +10,8 @@ Die Datensätze der Fragenkataloge sind jedoch durch einfaches Auswechseln der e
 
 Es wurde speziell darauf geachtet, dass die verwendeten Technologien **ohne** eigenem Webserver funktionieren. Daher können die Dateien entweder lokal auf einem PC heruntergeladen werden und direkt in einem modernen Webbrowser geöffnet werden, oder aber über folgenden Link direkt hier aufgerufen werden:
 
-https://raw.githack.com/pe-jot/Fragenkatalog/PPL/index.html
+https://rawcdn.githack.com/pe-jot/Fragenkatalog/d838d720ca6b0f0c606a77fe520453a360ed3079/index.html
+<!-- https://raw.githack.com/pe-jot/Fragenkatalog/PPL/index.html -->
 
 > ### Hinweis:
 > Der Autor übernimmt keine Haftung auf Vollständigkeit und Richtigkeit der hier zur Verfügung gestellten Fragenkataloge!
