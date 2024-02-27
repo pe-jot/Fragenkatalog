@@ -17,6 +17,13 @@ $(document).ready(function() {
 	
 	loadFilters();
 	initialize();
+	
+	// Default color scheme: auto
+	window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function() {
+		setTheme("auto");
+	});	
+	activateTheme(getStoredTheme());
+	$("#changeTheme").on("click", toggleTheme);
 });
 
 function loadFilters() {
@@ -264,4 +271,33 @@ function showResult() {
 	$("#restart").show();
 	
 	$("#quizResults").show();
+}
+
+function getStoredTheme() {
+	let stored = localStorage.getItem("theme");
+	return (stored == null) ? "auto" : stored;
+}
+
+function saveTheme(theme) {
+	localStorage.setItem("theme", theme);
+}
+
+function setTheme(theme) {
+	document.documentElement.setAttribute("data-bs-theme", theme === "auto"
+		? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+		: theme
+	);
+}
+
+function activateTheme(theme) {
+	setTheme(theme);
+	$("#changeTheme div").hide();
+	$("#changeTheme div[data-theme='" + theme + "']").show();
+}
+
+function toggleTheme() {
+	let current = $("#changeTheme div:visible").attr("data-theme");
+	let newTheme = (current === "dark") ? "light" : ((current === "auto") ? "dark" : "auto");
+	activateTheme(newTheme);
+	saveTheme(newTheme);
 }
