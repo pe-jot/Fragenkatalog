@@ -69,7 +69,18 @@
 						<button id="filterToggle" type="button" class="btn btn-primary btn-sm">Alle / Keine</button>
 					</div>
 				</fieldset>
+				
+				<div class="row justify-content-center align-items-center py-5">
+					<div class="col-auto">
+						<button class="btn btn-outline-success" type="button" id="showList">Fragen anzeigen</button>
+					</div>
+				</div>
 			</form>
+			
+			<div id="list" style="display: none">
+				<p><button class="btn btn-outline-primary" type="button" id="closeList">zurück</button></p>
+				<!-- <table class="table table-sm"></table> -->
+			</div>
 			
 			<div class="container" id="quiz" style="display: none">
 				<div class="row pb-4 align-items-center">

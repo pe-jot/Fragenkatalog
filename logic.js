@@ -15,6 +15,8 @@ $(document).ready(function() {
 	$("#restartWrong").on("click", { restart: true }, start);
 	$("#abort").on("click", showResult);
 	$("#filterToggle"). on("click", toggleFilters);
+	$("#showList").on("click", showList);
+	$("#closeList").on("click", closeList);
 	
 	loadFilters();
 	initialize();
@@ -283,6 +285,57 @@ function showResult() {
 	$("#restart").show();
 	
 	$("#quizResults").show();
+}
+
+function categoryToTableId(category) {
+	return "table" + category.replaceAll(' ','');
+}
+
+function createTable(category) {
+	return $("<table>", { "class" : "table table-sm", "id" : categoryToTableId(category) })
+		.append($("<tbody>")
+			.append($("<tr>")
+				.append($("<th>", { "colspan" : "2" })
+					.append($("<h4>").text(category)))
+		));
+}
+
+function appendListItem(question) {
+	// Decide where to append new question
+	let qParent = $("#" + categoryToTableId(question.category));
+	
+	qParent.append($("<tr>", { "class" : "table-active table-group-divider" })
+		.append($("<td>")
+			.append($("<b>").text(question.qid)))
+		.append($("<td>").html(question.question))
+	);
+	
+	for (let i = 0; i < question.answers.length; i++) {
+		qParent.append($("<tr>")
+			// Correct answer is marked with a large tickmark
+			.append($("<td>").html((i == question.correct) ? "&#10004;" : ""))
+			.append($("<td>").html(question.answers[i]))
+		);
+	}
+}
+
+function showList() {
+	$("#quizStart").hide();
+	$("#list table").remove();
+	
+	$("#filter input:checkbox:checked[data-type='category']").each(function() {
+		let category = $(this).val();
+		$("#list").append(createTable(category));
+	});
+	
+	filteredQuestionnaire.forEach(question => appendListItem(question));
+	
+	$("#list").show();
+}
+
+function closeList() {
+	$("#list").hide();
+	$("#quizStart").show();
 }
 
 function getStoredTheme() {
