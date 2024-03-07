@@ -14,6 +14,7 @@ $(document).ready(function() {
 	$("#restart").on("click", initialize);
 	$("#restartWrong").on("click", { restart: true }, start);
 	$("#abort").on("click", showResult);
+	$("#filterToggle"). on("click", toggleFilters);
 	
 	loadFilters();
 	initialize();
@@ -31,6 +32,9 @@ function loadFilters() {
 	categories.forEach(c => addFilter("category", c));
 	
 	let filters = new Set(questionnaire.map(a => a.filter));
+	if (categories.size > 1 && filters.size > 1) {
+		$("#filter > div > div").append($("<hr/>"));
+	}
 	filters.forEach(f => addFilter("filter", f));
 	
 	if (categories.size > 0 || filters.size > 0) {
@@ -42,7 +46,7 @@ function addFilter(type, value) {
 	if (value == null || value == undefined) {
 		return;
 	}
-	$("#filter > div").append(
+	$("#filter > div > div").append(
 		$("<div>", { "class" : "form-check" })
 			.append(
 				$("<input>", { 
@@ -59,6 +63,14 @@ function addFilter(type, value) {
 					.text(value)
 			)
 	);
+}
+
+function toggleFilters() {	
+	let allFilters = $("#filter input:checkbox");
+	let checkedCount = allFilters.filter(":checked").length;
+	let uncheckedCount = allFilters.length - checkedCount;
+	allFilters.each(function() { this.checked = (uncheckedCount > checkedCount); });
+	applyFilter();
 }
 
 function applyFilter() {
