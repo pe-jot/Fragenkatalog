@@ -313,7 +313,7 @@ function appendListItem(question) {
 	for (let i = 0; i < question.answers.length; i++) {
 		qParent.append($("<tr>")
 			// Correct answer is marked with a large tickmark
-			.append($("<td>").html((i == question.correct) ? "&#10004;" : ""))
+			.append($("<td>").html(((i + 1) == question.correct) ? "&#10004;" : ""))
 			.append($("<td>").html(question.answers[i]))
 		);
 	}
