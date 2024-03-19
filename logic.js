@@ -187,13 +187,14 @@ function displayQuestion() {
 		$("#question").html("<b>" + current.qid + "</b> &nbsp; " + current.question);
 	}
 	
-	if (current.image != null) {
-		$("#image img").attr("src", current.image);
-		$("#image").show();
-	}
-	else {
-		$("#image").hide();
-		$("#image img").attr("src", "");		
+	let qImage = $("#image");
+	if (qImage.is(":visible") || current.image != null) {
+		qImage.fadeOut(function() {
+			qImage.children("img").attr("src", (current.image != null) ? current.image : "");	
+			if (current.image != null) {
+				qImage.fadeIn();
+			}
+		});
 	}
 	
 	$("#answers").empty();
