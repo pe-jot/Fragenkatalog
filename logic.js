@@ -190,9 +190,11 @@ function displayQuestion() {
 	let qImage = $("#image");
 	if (qImage.is(":visible") || current.image != null) {
 		qImage.fadeOut(function() {
-			qImage.children("img").attr("src", (current.image != null) ? current.image : "");	
+			// Destroy & re-create entire image, otherwise browser will still show the old image until the new one is loaded.
+			qImage.empty();
 			if (current.image != null) {
-				qImage.fadeIn();
+				qImage.append($("<img>", { "class" : "img-fluid", "alt" : "Explanatory image", "src" : current.image }));
+				qImage.show();
 			}
 		});
 	}
