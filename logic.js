@@ -175,6 +175,15 @@ function updateProgress() {
 			.text(currentQuestion + " / " + questionCount + " (" + percentage + " %)");
 }
 
+function createImage(filePath) {
+	let altText = "Explanatory image";
+	let fileName = filePath.match(/[ \w-]+?(?=\.)/);
+	if (fileName != null) {
+		altText = altText + " [" + fileName + "]";
+	}
+	return $("<img>", { "class" : "img-fluid", "alt" : altText, "src" : filePath });
+}
+
 function displayQuestion() {
 	let current = selectedQuestions[currentQuestion];
 	
@@ -193,7 +202,7 @@ function displayQuestion() {
 			// Destroy & re-create entire image, otherwise browser will still show the old image until the new one is loaded.
 			qImage.empty();
 			if (current.image != null) {
-				qImage.append($("<img>", { "class" : "img-fluid", "alt" : "Explanatory image", "src" : current.image }));
+				qImage.append(createImage(current.image));
 				qImage.show();
 			}
 		});
