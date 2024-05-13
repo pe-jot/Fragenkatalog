@@ -7,6 +7,7 @@ let correctAnswers;
 let wrongAnswers;
 let questionAnswered;
 let startTime;
+let options;
 
 $(document).ready(function() {
 	$("#caption").text(title);
@@ -18,6 +19,10 @@ $(document).ready(function() {
 	$("#showList").on("click", showList);
 	$("#closeList").on("click", closeList);
 	
+	options = new Map();
+	$("#options input:checkbox").on("change", onOptionChanged);
+	onOptionChanged();
+	
 	loadFilters();
 	initialize();
 	
@@ -28,6 +33,12 @@ $(document).ready(function() {
 	activateTheme(getStoredTheme());
 	$("#changeTheme").on("click", toggleTheme);
 });
+
+function onOptionChanged() {	
+	$("#options input:checkbox").each(function() {
+		options.set($(this).attr("data-value"), this.checked);
+	});
+}
 
 function loadFilters() {
 	let categories = new Set(questionnaire.map(a => a.category));
@@ -129,30 +140,27 @@ function start(event) {
 	$("#quizResults").hide();
 	$("#restartWrong").hide();
 	
+	// Restart with either wrongly answered questions or Start with all (filtered) questions
 	let restart = (event.data != null && event.data.restart === true);
+	let tempQuestions = restart ? wrongQuestions : filteredQuestionnaire;
 	
 	currentQuestion = 0;
 	correctAnswers = 0;
 	wrongAnswers = 0;
 	questionCount = restart ? wrongQuestions.length : Number($("#questionCount").val());
 	
-	selectedQuestions = new Array();
+	selectedQuestions = new Array();	
 	
-	if (restart) {
-		// Restart with wrongly answered questions
+	if (options.get("shuffleQuestions")) {	
 		for (let i = 0; i < questionCount; i++) {
 			// Generate next question index, then add it to list of selected questions and remove it from the available questions
-			let next = Math.floor(Math.random() * wrongQuestions.length);
-			selectedQuestions.push(wrongQuestions[next]);
-			wrongQuestions.splice(next, 1);
-		}
-	}
-	else {
+			let next = Math.floor(Math.random() * tempQuestions.length);
+			selectedQuestions.push(tempQuestions[next]);
+			tempQuestions.splice(next, 1);
+		}	
+	} else {
 		for (let i = 0; i < questionCount; i++) {
-			// Generate next question index, then add it to list of selected questions and remove it from the available questions
-			let next = Math.floor(Math.random() * filteredQuestionnaire.length);
-			selectedQuestions.push(filteredQuestionnaire[next]);
-			filteredQuestionnaire.splice(next, 1);
+			selectedQuestions.push(tempQuestions[i]);
 		}
 	}
 	
@@ -234,8 +242,12 @@ function answerClicked() {
 		wrongAnswers = wrongAnswers + 1;
 		qThis.removeClass("btn-outline-primary").addClass("btn-danger");
 	}
-	// Show correct answer
-	$("#answers > button[data-correct]").removeClass("btn-outline-primary").addClass("btn-success");
+	
+	if (correct || (!correct && options.get("markCorrectAnswer"))) {
+		// Show correct answer
+		$("#answers > button[data-correct]").removeClass("btn-outline-primary").addClass("btn-success");
+	}
+	
 	// Prevent any further clicks
 	$("#answers > button").off("click");
 }
