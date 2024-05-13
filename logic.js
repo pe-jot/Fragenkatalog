@@ -259,6 +259,7 @@ function showResult() {
 	let end = new Date();
 	
 	$("#nextQuestion").off("click");
+	$("#image").hide();
 	$("#quiz").hide();
 	
 	let correctPercentage = Math.round(100 * correctAnswers / questionCount);
