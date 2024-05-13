@@ -255,6 +255,17 @@ function nextQuestion() {
 	}
 }
 
+// Get a time format with trailing zeroes
+Date.prototype.toDurationTimeString = function() {	
+	let h = Math.floor(this.getTime() / (60 * 60 * 1000));	
+	let hours = (h < 10) ? ("0" + h) : h;
+	
+	let minutes = (this.getMinutes() < 10) ? ("0" + this.getMinutes()) : this.getMinutes();
+	let seconds = (this.getSeconds() < 10) ? ("0" + this.getSeconds()) : this.getSeconds();	
+	
+	return hours + ":" + minutes + ":" + seconds;
+}
+
 function showResult() {
 	let end = new Date();
 	
@@ -289,8 +300,8 @@ function showResult() {
 		.children("div.progress-bar")
 			.text(skippedAnswers + " (" + skippedPercentage + " %)");
 	
-	let dT = new Date(end - startTime + end.getTimezoneOffset() * 60 * 1000);
-	$("#duration").text(dT.toLocaleTimeString());
+	let dT = new Date(end - startTime);
+	$("#duration").text(dT.toDurationTimeString());
 	
 	if (wrongQuestions.length > 0) {
 		$("#restartWrong").show();
