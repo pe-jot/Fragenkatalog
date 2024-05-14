@@ -1,7 +1,7 @@
 // Implement questionnaire as JSON in a js file in order to avoid requirement of a webserver
 
 // Title of this questionnaire
-const title = "PPL Fragenkatalog Trainer";
+const title = "PPL Fragenkatalog (2015)";
 
 // Questionnaire data
 const questionnaire = [

@@ -1,7 +1,7 @@
 // Implement questionnaire as JSON in a js file in order to avoid requirement of a webserver
 
 // Title of this questionnaire
-const title = "Flugfunk Fragenkatalog Trainer";
+const title = "Flugfunk Fragenkatalog";
 
 // Questionnaire data
 const questionnaire = [
