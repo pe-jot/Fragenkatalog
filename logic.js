@@ -338,12 +338,19 @@ function createTable(category) {
 
 function appendListItem(question) {
 	// Decide where to append new question
-	let qParent = $("#" + categoryToTableId(question.category));
+	let qParent = $("#" + categoryToTableId(question.category));	
+	let qQuestion = $("<td>").html(question.question);
+	
+	// Image is optional
+	if (question.image != null && options.get("showImagesInList")) {
+		qQuestion.append($("<br/>"));
+		qQuestion.append(createImage(question.image));
+	}
 	
 	qParent.append($("<tr>", { "class" : "table-active table-group-divider" })
 		.append($("<td>")
 			.append($("<b>").text(question.qid)))
-		.append($("<td>").html(question.question))
+		.append(qQuestion)
 	);
 	
 	for (let i = 0; i < question.answers.length; i++) {
