@@ -8,7 +8,7 @@ Die Datensätze der Fragenkataloge sind jedoch durch einfaches Auswechseln der e
 
 ## Verwendung
 
-Es wurde speziell darauf geachtet, dass die verwendeten Technologien **ohne** eigenem Webserver funktionieren. Daher können die Dateien entweder lokal auf einem PC heruntergeladen werden und direkt in einem modernen Webbrowser geöffnet werden, oder aber über die unten angeführten Links direkt aufgerufen werden.
+Es wurde speziell darauf geachtet, dass die verwendeten Technologien **ohne** eigenen Webserver funktionieren. Daher können die Dateien entweder lokal auf einem PC heruntergeladen werden und direkt in einem modernen Webbrowser geöffnet werden, oder aber über die unten angeführten Links direkt aufgerufen werden.
 
 ## Flugfunk
 
@@ -22,7 +22,7 @@ Die offiziellen Fragenkataloge sind auf der Website der Fernmeldebehörde https:
 > Der Autor übernimmt keine Haftung auf Vollständigkeit und Richtigkeit der hier zur Verfügung gestellten Fragenkataloge!
 
 #### Link:
-https://rawcdn.githack.com/pe-jot/Fragenkatalog/2a3a1d858ab812660d842575d8767d90090d56eb/flugfunk.html
+https://rawcdn.githack.com/pe-jot/Fragenkatalog/935898904429ad18322ab255e8c6b5b0d112b106/flugfunk.html
 <!-- https://raw.githack.com/pe-jot/Fragenkatalog/main/flugfunk.html -->
 
 ## PPL
@@ -31,7 +31,9 @@ https://rawcdn.githack.com/pe-jot/Fragenkatalog/2a3a1d858ab812660d842575d8767d90
 > Der Autor übernimmt keine Haftung auf Vollständigkeit und Richtigkeit der hier zur Verfügung gestellten Fragenkataloge!
 
 #### Link:
-https://rawcdn.githack.com/pe-jot/Fragenkatalog/2a3a1d858ab812660d842575d8767d90090d56eb/PPL.html
+https://rawcdn.githack.com/pe-jot/Fragenkatalog/935898904429ad18322ab255e8c6b5b0d112b106/PPL.html
+
+https://rawcdn.githack.com/pe-jot/Fragenkatalog/935898904429ad18322ab255e8c6b5b0d112b106/PPL_2019.html
 <!-- https://raw.githack.com/pe-jot/Fragenkatalog/main/PPL.html -->
 
 
