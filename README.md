@@ -31,9 +31,9 @@ https://rawcdn.githack.com/pe-jot/Fragenkatalog/935898904429ad18322ab255e8c6b5b0
 > Der Autor übernimmt keine Haftung auf Vollständigkeit und Richtigkeit der hier zur Verfügung gestellten Fragenkataloge!
 
 #### Link:
-https://rawcdn.githack.com/pe-jot/Fragenkatalog/8bc224363a48261c3eac402650154291f5e412bc/PPL.html
+https://rawcdn.githack.com/pe-jot/Fragenkatalog/4c761c2067cf1e51ce3e6213308efdad549011af/PPL.html
 
-https://rawcdn.githack.com/pe-jot/Fragenkatalog/8bc224363a48261c3eac402650154291f5e412bc/PPL_2019.html
+https://rawcdn.githack.com/pe-jot/Fragenkatalog/4c761c2067cf1e51ce3e6213308efdad549011af/PPL_2019.html
 <!-- https://raw.githack.com/pe-jot/Fragenkatalog/main/PPL.html -->
 
 
