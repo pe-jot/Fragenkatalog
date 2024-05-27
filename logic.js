@@ -20,7 +20,7 @@ $(document).ready(function() {
 	$("#closeList").on("click", closeList);
 	
 	options = new Map();
-	$("#options input:checkbox").on("change", onOptionChanged);
+	$("input:checkbox.quiz-option").on("change", onOptionChanged);
 	onOptionChanged();
 	
 	loadFilters();
@@ -31,11 +31,11 @@ $(document).ready(function() {
 		setTheme("auto");
 	});	
 	activateTheme(getStoredTheme());
-	$("#changeTheme").on("click", toggleTheme);
+	$("#changeTheme").on("click", onChangeTheme);
 });
 
 function onOptionChanged() {	
-	$("#options input:checkbox").each(function() {
+	$("input:checkbox.quiz-option").each(function() {
 		options.set($(this).attr("data-value"), this.checked);
 	});
 }
@@ -403,7 +403,7 @@ function activateTheme(theme) {
 	$("#changeTheme div[data-theme='" + theme + "']").show();
 }
 
-function toggleTheme() {
+function onChangeTheme() {
 	let current = $("#changeTheme div:visible").attr("data-theme");
 	let newTheme = (current === "dark") ? "light" : ((current === "auto") ? "dark" : "auto");
 	activateTheme(newTheme);
