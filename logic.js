@@ -1,10 +1,6 @@
+const storageName = "quiz/" + title;
+let quiz = { questionCount:0, currentQuestion:0, correctAnswers:0, wrongAnswers:0, selectedQuestions:[], wrongQuestions:[] };
 let filteredQuestionnaire;
-let selectedQuestions;
-let wrongQuestions;
-let questionCount;
-let currentQuestion;
-let correctAnswers;
-let wrongAnswers;
 let questionAnswered;
 let startTime;
 let options;
@@ -12,19 +8,27 @@ let options;
 $(document).ready(function() {
 	$("#caption").text(title);
 	$("#start").on("click", start);
-	$("#restart").on("click", initialize);
-	$("#restartWrong").on("click", { restart: true }, start);
+	$("#restart").on("click", { clearStorage: true }, initialize);
+	$("#redoWrong").on("click", { redo: true }, start);
 	$("#abort").on("click", showResult);
 	$("#filterToggle"). on("click", toggleFilters);
 	$("#showList").on("click", showList);
 	$("#closeList").on("click", closeList);
+	$("#clearSession").on("click", { clear: true }, onStoreSession);
+	$("#saveSession").on("click", { save: true }, onStoreSession);
 	
+	$("#optionsOffcanvas").on("show.bs.offcanvas", updateOffcanvasButtonVisibility);
 	options = new Map();
 	$("input:checkbox.quiz-option").on("change", onOptionChanged);
 	onOptionChanged();
 	
 	loadFilters();
-	initialize();
+	initialize();	
+	
+	// Check localStorage for previous session
+	if (hasSavedSession()) {
+		restoreQuiz();
+	}
 	
 	// Default color scheme: auto
 	window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function() {
@@ -33,6 +37,19 @@ $(document).ready(function() {
 	activateTheme(getStoredTheme());
 	$("#changeTheme").on("click", onChangeTheme);
 });
+
+function updateOffcanvasButtonVisibility() {
+	if (hasSavedSession()) { // Data available?
+		$("#clearSession").show();
+	} else {
+		$("#clearSession").hide();
+	}
+	if (startTime != null) { // In quiz?
+		$("#saveSession").show();
+	} else {
+		$("#saveSession").hide();
+	}
+}
 
 function onOptionChanged() {	
 	$("input:checkbox.quiz-option").each(function() {
@@ -125,10 +142,17 @@ function applyFilter() {
 	$("#questionCount").val(filteredQuestionnaire.length);
 }
 
-function initialize() {
+function initialize(event) {
+	// In case triggered by button click, clear the local storage
+	if (event && event.data && event.data.clearStorage) {
+		clearSession();
+	}
+	
+	startTime = null;
+	
 	$("#quiz").hide();
 	$("#quizResults").hide();
-	$("#restart").hide();	
+	$("#restart").hide();
 	
 	applyFilter();
 	
@@ -138,33 +162,17 @@ function initialize() {
 function start(event) {	
 	$("#quizStart").hide();
 	$("#quizResults").hide();
-	$("#restartWrong").hide();
-	
-	// Restart with either wrongly answered questions or Start with all (filtered) questions
-	let restart = (event.data != null && event.data.restart === true);
-	let tempQuestions = restart ? wrongQuestions : filteredQuestionnaire;
-	
-	currentQuestion = 0;
-	correctAnswers = 0;
-	wrongAnswers = 0;
-	questionCount = restart ? wrongQuestions.length : Number($("#questionCount").val());
-	
-	selectedQuestions = new Array();	
-	
-	if (options.get("shuffleQuestions")) {	
-		for (let i = 0; i < questionCount; i++) {
-			// Generate next question index, then add it to list of selected questions and remove it from the available questions
-			let next = Math.floor(Math.random() * tempQuestions.length);
-			selectedQuestions.push(tempQuestions[next]);
-			tempQuestions.splice(next, 1);
-		}	
+	$("#redoWrong").hide();
+		
+	if (event.data && event.data.continueQuiz && hasSavedSession()) {
+		// Continue quiz
+		let storageData = localStorage.getItem(storageName);
+		quiz = JSON.parse(storageData);
 	} else {
-		for (let i = 0; i < questionCount; i++) {
-			selectedQuestions.push(tempQuestions[i]);
-		}
-	}
-	
-	wrongQuestions = new Array();
+		// Redo with either wrongly answered questions or Start with all (filtered) questions
+		let redo = (event.data && event.data.redo);
+		initializeQuesionnaire(redo);
+	}	
 	
 	updateProgress();
 	displayQuestion();
@@ -174,13 +182,72 @@ function start(event) {
 	startTime = new Date();
 }
 
+function initializeQuesionnaire(redo) {	
+	quiz.currentQuestion = 0;
+	quiz.correctAnswers = 0;
+	quiz.wrongAnswers = 0;
+	quiz.selectedQuestions = new Array();	
+	quiz.questionCount = redo ? quiz.wrongQuestions.length : Number($("#questionCount").val());
+	
+	let tempQuestions = redo ? quiz.wrongQuestions : filteredQuestionnaire;	
+	
+	if (options.get("shuffleQuestions")) {	
+		for (let i = 0; i < quiz.questionCount; i++) {
+			// Generate next question index, then add it to list of selected questions and remove it from the available questions
+			let next = Math.floor(Math.random() * tempQuestions.length);
+			quiz.selectedQuestions.push(tempQuestions[next]);
+			tempQuestions.splice(next, 1);
+		}	
+	} else {
+		for (let i = 0; i < quiz.questionCount; i++) {
+			quiz.selectedQuestions.push(tempQuestions[i]);
+		}
+	}
+	
+	quiz.wrongQuestions = new Array();
+}
+
+function onStoreSession(event) {
+	let messageOrigin = "";
+	if (event.data.save) {
+		messageOrigin = "#saveSession";
+		saveSession();
+	}
+	if (event.data.clear) {
+		messageOrigin = "#clearSession";
+		clearSession();
+	}
+	let message = $(messageOrigin).attr("message-success");
+	$("#storeModal div.modal-body").text(message);
+	updateOffcanvasButtonVisibility();
+}
+
+function saveSession() {
+	localStorage.setItem(storageName, JSON.stringify(quiz));
+}
+
+function clearSession() {
+	localStorage.removeItem(storageName);
+}
+
+function hasSavedSession() {
+	return localStorage.getItem(storageName) != null;
+}
+
+function restoreQuiz() {
+	$("#modalButtonOK").one("click", { continueQuiz: true }, start);
+	$("#modalButtonRestart").one("click", { clearStorage: true }, initialize);	
+	const restoreModal = new bootstrap.Modal("#restoreModal");
+	restoreModal.show();
+}
+
 function updateProgress() {
-	let percentage = Math.round(100 * currentQuestion / questionCount);
+	let percentage = Math.round(100 * quiz.currentQuestion / quiz.questionCount);
 	$("#quiz div.progress")
 		.attr("aria-valuenow", percentage)
 		.children("div.progress-bar")
 			.width(percentage + "%")
-			.text(currentQuestion + " / " + questionCount + " (" + percentage + " %)");
+			.text(quiz.currentQuestion + " / " + quiz.questionCount + " (" + percentage + " %)");
 }
 
 function createImage(filePath) {
@@ -193,7 +260,7 @@ function createImage(filePath) {
 }
 
 function displayQuestion() {
-	let current = selectedQuestions[currentQuestion];
+	let current = quiz.selectedQuestions[quiz.currentQuestion];
 	
 	if (current.category != null) {
 		$("#questionId").text(current.category);
@@ -235,11 +302,11 @@ function answerClicked() {
 	let qThis = $(this);
 	let correct = qThis.attr("data-correct") === "true";
 	if (correct) {
-		correctAnswers = correctAnswers + 1;
+		quiz.correctAnswers = quiz.correctAnswers + 1;
 	}
 	else {
-		wrongQuestions.push(selectedQuestions[currentQuestion]);
-		wrongAnswers = wrongAnswers + 1;
+		quiz.wrongQuestions.push(quiz.selectedQuestions[quiz.currentQuestion]);
+		quiz.wrongAnswers = quiz.wrongAnswers + 1;
 		qThis.removeClass("btn-outline-primary").addClass("btn-danger");
 	}
 	
@@ -255,11 +322,11 @@ function answerClicked() {
 function nextQuestion() {
 	// Add unanswered question to list of wrong questions to repeat them later
 	if (!questionAnswered) {
-		wrongQuestions.push(selectedQuestions[currentQuestion]);
+		quiz.wrongQuestions.push(quiz.selectedQuestions[quiz.currentQuestion]);
 	}
-	currentQuestion = currentQuestion + 1;
+	quiz.currentQuestion = quiz.currentQuestion + 1;
 	updateProgress();
-	if (currentQuestion === questionCount) {
+	if (quiz.currentQuestion === quiz.questionCount) {
 		showResult();
 	}
 	else {
@@ -285,26 +352,26 @@ function showResult() {
 	$("#image").hide();
 	$("#quiz").hide();
 	
-	let correctPercentage = Math.round(100 * correctAnswers / questionCount);
+	let correctPercentage = Math.round(100 * quiz.correctAnswers / quiz.questionCount);
 	
-	$("#result").text(correctAnswers + " von " + questionCount + " richtig (" + correctPercentage + " %)");
+	$("#result").text(quiz.correctAnswers + " von " + quiz.questionCount + " richtig (" + correctPercentage + " %)");
 	
 	$("#quizResults div.progress").has("div.bg-success")
 		.attr("aria-valuenow", correctPercentage)
 		.width(correctPercentage + "%")
 		.children("div.progress-bar")
-			.text(correctAnswers + " (" + correctPercentage + " %)");
+			.text(quiz.correctAnswers + " (" + correctPercentage + " %)");
 	
-	let wrongPercentage = Math.round(100 * wrongAnswers / questionCount);
+	let wrongPercentage = Math.round(100 * quiz.wrongAnswers / quiz.questionCount);
 	
 	$("#quizResults div.progress").has("div.bg-danger")
 		.attr("aria-valuenow", wrongPercentage)
 		.width(wrongPercentage + "%")
 		.children("div.progress-bar")
-			.text(wrongAnswers + " (" + wrongPercentage + " %)");
+			.text(quiz.wrongAnswers + " (" + wrongPercentage + " %)");
 	
 	let skippedPercentage = 100 - correctPercentage - wrongPercentage;
-	let skippedAnswers = questionCount - correctAnswers - wrongAnswers;
+	let skippedAnswers = quiz.questionCount - quiz.correctAnswers - quiz.wrongAnswers;
 	
 	$("#quizResults div.progress").has("div.bg-secondary")
 		.attr("aria-valuenow", skippedPercentage)
@@ -315,9 +382,9 @@ function showResult() {
 	let dT = new Date(end - startTime);
 	$("#duration").text(dT.toDurationTimeString());
 	
-	if (wrongQuestions.length > 0) {
-		$("#restartWrong").show();
-	}
+	if (quiz.wrongQuestions.length > 0) {
+		$("#redoWrong").show();
+	}	
 	$("#restart").show();
 	
 	$("#quizResults").show();

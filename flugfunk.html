@@ -135,9 +135,9 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col text-center">
-						<button class="btn btn-outline-primary" type="button" id="restartWrong" style="display: none">Falsche / übersprungene Antworten nochmals versuchen</button>
-						<button class="btn btn-outline-primary" type="button" id="restart" style="display: none">Neustart</button>
+					<div class="d-grid gap-3 col-6 mx-auto">
+						<button class="btn btn-outline-primary" type="button" id="redoWrong" style="display: none">Falsche / übersprungene Antworten nochmals versuchen</button>
+						<button class="btn btn-outline-danger" type="button" id="restart" style="display: none">Neustart</button>
 					</div>
 				</div>
 			</div><!-- Quiz results -->			
@@ -197,9 +197,49 @@
 							</div>
 						</div>
 					</div>
+					<!-- Save / clear buttons -->
+					<div class="row py-2">
+						<div class="d-grid gap-3">
+							<button class="btn btn-outline-success" type="button" id="saveSession" data-bs-toggle="modal" data-bs-target="#storeModal" message-success="Aktueller Fortschritt wurde gespeichert!">Fortschritt speichern</button>
+							<button class="btn btn-outline-danger" type="button" id="clearSession" data-bs-toggle="modal" data-bs-target="#storeModal" message-success="Fortschrittsdaten wurden gelöscht!">Fortschrittsdaten löschen</button>
+						</div>
+					</div>
 				</div><!-- Offcanvas body -->				
 			</div><!-- Options Offcanvas -->
+
+			<div class="modal fade" id="storeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5">Fragenkatalog</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body"><!-- Filled with message-success attribute --></div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+						</div>
+					</div>
+				</div>
+			</div><!-- Store (save/delete) Modal -->			
 			
+			<div class="modal fade" id="restoreModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5">Fragenkatalog</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							Soll der bisherige Fortschritt wiederhergestellt werden?
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="modalButtonOK">OK</button>
+							<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="modalButtonRestart">Neustart</button>
+						</div>
+					</div>
+				</div>
+			</div><!-- Restore Modal -->
+		
 		</div><!-- Main container -->
 		
 		<script type="text/javascript" src="flugfunk.js"></script>
