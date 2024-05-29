@@ -22,7 +22,7 @@ Die offiziellen Fragenkataloge sind auf der Website der Fernmeldebehörde https:
 > Der Autor übernimmt keine Haftung auf Vollständigkeit und Richtigkeit der hier zur Verfügung gestellten Fragenkataloge!
 
 #### Link:
-https://rawcdn.githack.com/pe-jot/Fragenkatalog/935898904429ad18322ab255e8c6b5b0d112b106/flugfunk.html
+https://rawcdn.githack.com/pe-jot/Fragenkatalog/c5f775b6b115c6e9668ea11d372680401edcee81/flugfunk.html
 <!-- https://raw.githack.com/pe-jot/Fragenkatalog/main/flugfunk.html -->
 
 ## PPL
@@ -31,9 +31,9 @@ https://rawcdn.githack.com/pe-jot/Fragenkatalog/935898904429ad18322ab255e8c6b5b0
 > Der Autor übernimmt keine Haftung auf Vollständigkeit und Richtigkeit der hier zur Verfügung gestellten Fragenkataloge!
 
 #### Link:
-https://rawcdn.githack.com/pe-jot/Fragenkatalog/4c761c2067cf1e51ce3e6213308efdad549011af/PPL.html
+https://rawcdn.githack.com/pe-jot/Fragenkatalog/c5f775b6b115c6e9668ea11d372680401edcee81/PPL.html
 
-https://rawcdn.githack.com/pe-jot/Fragenkatalog/6ca791c272e1d48799d7947aff342f4b16aadb94/PPL_2019.html
+https://rawcdn.githack.com/pe-jot/Fragenkatalog/c5f775b6b115c6e9668ea11d372680401edcee81/PPL_2019.html
 <!-- https://raw.githack.com/pe-jot/Fragenkatalog/main/PPL.html -->
 
 
