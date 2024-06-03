@@ -53,7 +53,7 @@ function updateOffcanvasButtonVisibility() {
 
 function onOptionChanged() {	
 	$("input:checkbox.quiz-option").each(function() {
-		options.set($(this).attr("data-value"), this.checked);
+		options.set($(this).attr("name"), this.checked);
 	});
 }
 
@@ -76,12 +76,14 @@ function addFilter(type, value) {
 	if (value == null || value == undefined) {
 		return;
 	}
+	let name = "chkbx" + value.trim();
 	$("#filter > div > div").append(
 		$("<div>", { "class" : "form-check" })
 			.append(
 				$("<input>", { 
 					"class" : "form-check-input form-check-input-lg",
 					"type" : "checkbox",
+					"id" : name,
 					"data-type" : type,
 					"value" : value,
 					"checked" : true
@@ -89,8 +91,11 @@ function addFilter(type, value) {
 				.on("change", applyFilter)
 			)
 			.append(
-				$("<label>", { "class" : "form-check-label" })
-					.text(value)
+				$("<label>", {
+					"class" : "form-check-label",
+					"for" : name
+				})
+				.text(value)
 			)
 	);
 }
